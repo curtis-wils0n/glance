@@ -1,0 +1,130 @@
+- name: Home
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+  hide-desktop-navigation: true
+  columns:
+    - size: small
+      widgets:
+        - type: clock
+          hour-format: 12h
+
+        - type: calendar
+          first-day-of-week: monday
+
+        - type: twitch-channels
+          channels:
+            - northernlion
+            - yu_song
+            - RektByProtoss
+            - Squeex
+            - Jerma985
+            - Barny
+
+    - size: full
+      widgets:
+        - type: group
+          widgets:
+            - type: rss
+              limit: 10
+              collapse-after: 3
+              cache: 12h
+              title: Top Stories 
+              style: detailed-list
+              feeds:
+                - url: https://rss.cbc.ca/lineup/topstories.xml
+                  headers:
+                    User-Agent: Custom User Agent
+            - type: rss
+              limit: 10
+              collapse-after: 3
+              cache: 12h
+              title: Local News
+              style: detailed-list
+              feeds:
+                - url: https://www.cbc.ca/webfeed/rss/rss-canada-calgary
+                  headers:
+                    User-Agent: Custom User Agent
+            - type: hacker-news
+            - type: lobsters
+            - type: rss
+              limit: 10
+              collapse-after: 3
+              cache: 12h
+              feeds:
+                - url: https://maggieappleton.com/rss.xml
+                - url: https://detritus.zone/feed.xml
+                - url: https://now.lectronice.com/feed.xml
+                - url: https://cblgh.org/all.xml
+                - url: https://longest.voyage/index.xml
+                - url: https://palomakop.tv/rss.xml
+                - url: https://kokorobot.ca/links/rss.xml
+                - url: https://ameyama.com/blog/rss.xml
+                - url: https://nonmateria.com/rss.xml
+                - url: https://maxdeviant.com/atom.xml
+                - url: https://taylor.town/feed.xml
+                - url: https://zachholman.com/atom.xml
+                - url: https://pketh.org/feed.xml
+                - url: https://kevinlynagh.com/feed.xml
+                - url: https://wingolog.org/feed/atom
+                - url: https://www.scattered-thoughts.net/atom.xml
+                - url: https://sometimes.digital/feed.xml
+                - url: https://tomoe.asia/index.xml
+                - url: https://sweetfish.site/feed.xml
+                - url: https://kayserifserif.place/feed.xml
+                - url: https://arnes.space/feed.xml
+                - url: https://kaimac.org/feed.xml
+                - url: https://me.micahrl.com/blog/rss.xml
+                - url: https://lagomor.ph/posts/index.xml
+
+              
+                
+        - type: group
+          widgets:
+            - type: reddit
+              subreddit: technology
+              show-thumbnails: true
+            - type: reddit
+              subreddit: selfhosted
+              show-thumbnails: true
+
+    - size: small
+      widgets:
+        - type: weather
+          location: Calgary, Canada
+          units: metric # alternatively "imperial"
+          hour-format: 12h # alternatively "24h"
+          # Optionally hide the location from being displayed in the widget
+          # hide-location: true
+
+        # - type: markets
+        #   # The link to go to when clicking on the symbol in the UI,
+        #   # {SYMBOL} will be substituded with the symbol for each market
+        #   symbol-link-template: https://www.tradingview.com/symbols/{SYMBOL}/news
+        #   markets:
+        #     - symbol: SPY
+        #       name: S&P 500
+        #     - symbol: BTC-USD
+        #       name: Bitcoin
+        #     - symbol: NVDA
+        #       name: NVIDIA
+        #     - symbol: AAPL
+        #       name: Apple
+        #     - symbol: MSFT
+        #       name: Microsoft
+
+        - type: custom-api
+          title: Steam Specials
+          cache: 12h
+          url: https://store.steampowered.com/api/featuredcategories?cc=ca
+          template: |
+            <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+            {{ range .JSON.Array "specials.items" }}
+              <li>
+                <a class="size-h4 color-highlight block text-truncate" target="_blank" href="https://store.steampowered.com/app/{{ .Int "id" }}/">{{ .String "name" }}</a>
+                <ul class="list-horizontal-text">
+                  <li>{{ .Int "final_price" | toFloat | mul 0.01 | printf "$%.2f" }}</li>
+                  {{ $discount := .Int "discount_percent" }}
+                  <li{{ if ge $discount 40 }} class="color-positive"{{ end }}>{{ $discount }}% off</li>
+                </ul>
+              </li>
+            {{ end }}
+            </ul>
