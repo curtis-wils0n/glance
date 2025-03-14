@@ -75,16 +75,12 @@
                 - url: https://me.micahrl.com/blog/rss.xml
                 - url: https://lagomor.ph/posts/index.xml
 
-              
-                
         - type: group
           widgets:
             - type: reddit
               subreddit: technology
-              show-thumbnails: true
             - type: reddit
               subreddit: selfhosted
-              show-thumbnails: true
 
     - size: small
       widgets:
@@ -94,23 +90,6 @@
           hour-format: 12h # alternatively "24h"
           # Optionally hide the location from being displayed in the widget
           # hide-location: true
-
-        # - type: markets
-        #   # The link to go to when clicking on the symbol in the UI,
-        #   # {SYMBOL} will be substituded with the symbol for each market
-        #   symbol-link-template: https://www.tradingview.com/symbols/{SYMBOL}/news
-        #   markets:
-        #     - symbol: SPY
-        #       name: S&P 500
-        #     - symbol: BTC-USD
-        #       name: Bitcoin
-        #     - symbol: NVDA
-        #       name: NVIDIA
-        #     - symbol: AAPL
-        #       name: Apple
-        #     - symbol: MSFT
-        #       name: Microsoft
-
         - type: custom-api
           title: Steam Specials
           cache: 12h
